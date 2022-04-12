@@ -1,17 +1,29 @@
+import { Button, Keyboard, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 
 import AddItem from './components/AddItem';
+import { AppLoading } from 'expo-app-loading';
+import Colores from './constants/colores';
+import EditItem from './components/EditItem';
 import Index from './components/List/Index';
+import ListaItem from './components/List/ListaItem';
 import ModalItem from './components/Modal';
+import { useFonts } from 'expo-font';
 
 export default function App() {
+
+  const [loaded] = useFonts({
+    Roboto: require('./assets/fonts/Roboto-Regular.ttf'),
+    RobotoBold: require('./assets/fonts/Roboto-Bold.ttf'),
+    GrapeNuts: require('./assets/fonts/GrapeNuts-Regular.ttf'),
+  });
 
   const [counter, setCounter] = useState(4);
   const [textItem, setTextItem] = useState();
   const [listItem, setListItem] = useState([{id:1, value:'Martin'},{id:2, value:'Bruno'},{id:3, value:'Leon'}]);
   const [itemSelected, setItemSelected] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
+  const [editar, setEditar] = useState(false);
 
 
   const addItems = () => {
@@ -21,6 +33,7 @@ export default function App() {
     ]);
     setTextItem('');
     setCounter(counter + 1);    
+    Keyboard.dismiss();
   }
 
   const onHandlerChangueItem = ( texto ) => {
@@ -38,21 +51,56 @@ export default function App() {
     setModalVisible(!modalVisible);
   }
 
+  const onHandlerEditar = ( id ) => {
+    setItemSelected(listItem.filter( item => item.id === id)[0] );    
+    setEditar(true);
+  }
+
+  const closeEditar = (  ) => {    
+    setEditar(false);
+  }
+
   const closeModal = () => {
     setModalVisible(!modalVisible); 
     setItemSelected({});
-  }  
+  } 
 
-  const renderItem = data => <Text onPress={onHandlerModal.bind(this, data.item.id) }>{data.item.id}-  {data.item.value}</Text>
+  const renderItem = data =>( <ListaItem data={ data } onHandlerModal={onHandlerModal} onHandlerEditar={onHandlerEditar}  /> );
 
-  return (
-    <View style={styles.container}>  
-        <AddItem textItem={ textItem } onHandlerChangueItem={ onHandlerChangueItem } addItems={ addItems } />        
-        <Index listItem={ listItem } renderItem={ renderItem } />
-        <ModalItem modalVisible={ modalVisible } onHandlerDelete={ onHandlerDelete } itemSelected={itemSelected} closeModal={closeModal} />        
+  let contenido =  ( 
+    <View style={styles.container}> 
+      <Text style={ styles.titulo }>Listado de Item</Text>
+      <AddItem textItem={textItem} onHandlerChangueItem={onHandlerChangueItem} addItems={addItems} />        
+      <Index listItem={ listItem } renderItem={ renderItem } />
+      <ModalItem modalVisible={ modalVisible } onHandlerDelete={ onHandlerDelete } itemSelected={itemSelected} closeModal={closeModal} />        
     </View>
-
   );
+
+  if( editar ){
+  contenido = (
+      <EditItem itemSelected={itemSelected} onHandlerChangueItem={onHandlerChangueItem} addItems={addItems} closeEditar={closeEditar} />  
+    );
+ }
+
+    //if (!loaded) return <AppLoading />;
+
+
+    return contenido;
+
+  //  return 
+  //     (
+  //       <EditItem textItem={textItem} onHandlerChangueItem={onHandlerChangueItem} addItems={addItems} />  
+  //     );
+    // return (
+    //   <View style={styles.container}> 
+    //       <Text style={ styles.titulo }>Listado de Item</Text>
+    //       <AddItem textItem={textItem} onHandlerChangueItem={onHandlerChangueItem} addItems={addItems} />        
+    //       <Index listItem={ listItem } renderItem={ renderItem } />
+    //       <ModalItem modalVisible={ modalVisible } onHandlerDelete={ onHandlerDelete } itemSelected={itemSelected} closeModal={closeModal} />        
+    //   </View>
+
+    // );
+  
 }
 
 const styles = StyleSheet.create({
@@ -61,9 +109,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems:'center',
     flex: 1,
-    backgroundColor: '#212F3C',
+    backgroundColor: Colores.fondoAPP,
     alignItems: 'center',
     paddingTop: 50,
     paddingBottom: 10
+  },  
+  titulo: {
+    fontFamily: 'GrapeNuts',
+    color:'white',
+    fontSize: 32,        
+    marginBottom:10,
+    borderRadius: 10 
+    
   }
 });

@@ -1,6 +1,9 @@
 import {Button, StyleSheet, TextInput, View} from 'react-native';
 
-const AddItem = ( props ) => {
+import Colores from '../constants/colores';
+import React from 'react';
+
+const AddItem = (props) => {
     const { textItem, onHandlerChangueItem, addItems } = props;
 
     return (
@@ -13,13 +16,13 @@ const AddItem = ( props ) => {
 
 const styles = StyleSheet.create({   
     addItemContainer: {    
-      backgroundColor:'#ECF0F1',
+      backgroundColor:Colores.fondoContainer,
       alignItems: 'center',    
       justifyContent:'center',
       flexDirection:'row',
       marginBottom: 10,
       width: '90%',
-      height: 100,
+      height: 70,
       borderRadius: 10
     },
     textInput: {

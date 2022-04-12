@@ -1,5 +1,7 @@
 import {Button, Modal, StyleSheet, Text, View} from 'react-native';
 
+import React from 'react';
+
 const ModalItem =( prop ) => {
     const { modalVisible, onHandlerDelete, itemSelected, closeModal } = prop;
     
@@ -20,8 +22,8 @@ const ModalItem =( prop ) => {
                     <Text style={ styles.modalItem }>{ itemSelected.value }</Text>
                     </View>
                     <View style={{ flexDirection:'row', justifyContent:'space-between', width: 220, marginTop:10  }} >
-                    <Button title='Confirmar' color={ 'blue'}  onPress={ onHandlerDelete.bind(this, itemSelected.id) } />
-                    <Button title='Cancelar'  color={ 'red'}  onPress={ closeModal.bind(this) } />
+                      <Button title='Confirmar' color={ 'blue'}  onPress={ onHandlerDelete.bind(this, itemSelected.id) } />
+                      <Button title='Cancelar'  color={ 'red'}  onPress={ closeModal.bind(this) } />
                     </View>
                 </View>
             </View>

@@ -1,5 +1,8 @@
 import { FlatList, StyleSheet, View } from 'react-native';
 
+import Colores from '../../constants/colores';
+import React from 'react';
+
 const Index = ( props ) => {
     const { listItem, renderItem } = props;
 
@@ -15,12 +18,11 @@ const Index = ( props ) => {
 };
 
 const styles = StyleSheet.create({   
-    listItems:{
-      flex: 3,
-      backgroundColor: '#FDFEFE',
+    listItems:{       
+      backgroundColor: Colores.fondoContainer,
       width: '90%',
       borderRadius:8,
-      padding: 10,
+      padding: 5,
       alignItems:'center'    
     }
   });
