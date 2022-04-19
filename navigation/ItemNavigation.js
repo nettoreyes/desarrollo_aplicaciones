@@ -10,8 +10,11 @@ const ItemNavigation = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen name="Home" component={ Index } />
-                <Stack.Screen name="Editar" component={EditarItemTemporal} />
+                <Stack.Screen name="Home" component={ Index }  />
+                <Stack.Screen 
+                name="Editar" 
+                component={EditarItemTemporal} 
+                options={({route}) => ({ title: route.params.value })} />
             </Stack.Navigator>
         </NavigationContainer>
     );

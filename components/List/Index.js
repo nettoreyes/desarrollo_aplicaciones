@@ -2,11 +2,9 @@ import { Button, FlatList, Keyboard, StyleSheet, Text, View } from 'react-native
 import React, { useState } from 'react';
 
 import AddItem from '../AddItem';
-import { AppLoading } from 'expo-app-loading';
 import Colores from '../../constants/colores';
 import ListaItem from './ListaItem';
 import ModalItem from '../Modal';
-import { useFonts } from 'expo-font';
 
 const Index = ({ navigation }) => {    
 
@@ -33,9 +31,14 @@ const Index = ({ navigation }) => {
       setModalVisible(!modalVisible);
     }  
 
-    const onHandlerEditar = ( id ) => {
-      setItemSelected(listItem.filter( item => item.id === id)[0] );    
-      setEditar(true);
+    const onHandlerEditar = ( item ) => {
+      // setItemSelected(listItem.filter( item => item.id === id)[0] );    
+      // setEditar(true);
+      
+      navigation.navigate('Editar', { id: item.id, value: item.value } );
+
+      console.log(item);
+
     }
 
     const onHandlerChangueItem = ( texto ) => {
@@ -53,17 +56,13 @@ const Index = ({ navigation }) => {
       setItemSelected({});
     } 
 
-    const [loaded] = useFonts({
-      Roboto: require('../../assets/fonts/Roboto-Regular.ttf'),
-      RobotoBold: require('../../assets/fonts/Roboto-Bold.ttf'),
-      GrapeNuts: require('../../assets/fonts/GrapeNuts-Regular.ttf'),
-    });
+    
 
 
     const renderItem = data =>( <ListaItem data={ data } onHandlerModal={onHandlerModal} onHandlerEditar={onHandlerEditar} navigation={navigation}  /> );
 
 
-    // if (!loaded) return <AppLoading />
+    
 
     return (
         <View style={styles.container}>

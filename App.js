@@ -12,7 +12,7 @@ export default function App() {
       });
     
 
-    // if (!loaded) return <AppLoading />
+    if (!loaded) return <AppLoading />
 
     return (         
       <ItemNavigation />
