@@ -5,11 +5,7 @@ import React from 'react'
 
 const EditarItemTemporal = ({navigation, route}) => {
   let itemSelected = route.params;
-  return (
-    // <View >
-    //     <Text>{route.params.value}</Text>
-    //     <Button title="Ir a Home" onPress={() => navigation.navigate('Home')}/>
-    // </View>
+  return (   
     <View style={styles.container}>
             <Text style={ styles.titulo }>Editar Item</Text>
             <View style={styles.addItemContainer}>          
