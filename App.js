@@ -1,6 +1,8 @@
 import { AppLoading } from 'expo-app-loading';
 import ItemNavigation from './navigation/ItemNavigation';
+import { Provider } from 'react-redux';
 import React from 'react';
+import store from './store';
 import { useFonts } from 'expo-font';
 
 export default function App() {
@@ -16,8 +18,10 @@ export default function App() {
     //   <AppLoading />
     // );
 
-    return (         
-      <ItemNavigation />
+    return (   
+      <Provider store={store}>
+        <ItemNavigation />
+      </Provider>
     );  
   
 }

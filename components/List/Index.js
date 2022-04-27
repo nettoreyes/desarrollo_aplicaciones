@@ -1,14 +1,20 @@
 import { Button, FlatList, Keyboard, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import AddItem from '../AddItem';
 import Colores from '../../constants/colores';
 import ListaItem from './ListaItem';
 import ModalItem from '../Modal';
+import { PERSONAS } from '../../data/personas';
+import { seleccionarPersona } from '../../store/actions/persona.action';
 
 const Index = ({ navigation }) => {    
 
-    const [listItem, setListItem] = useState([{id:1, value:'Martin'},{id:2, value:'Bruno'},{id:3, value:'Leon'}]);
+    const personas = useSelector(state => state.personas.personas);
+    const dispatch = useDispatch();
+    
+    const [listItem, setListItem] = useState(PERSONAS);
     const [itemSelected, setItemSelected] = useState({});
     const [modalVisible, setModalVisible] = useState(false);
     const [editar, setEditar] = useState(false);
@@ -31,13 +37,10 @@ const Index = ({ navigation }) => {
       setModalVisible(!modalVisible);
     }  
 
-    const onHandlerEditar = ( item ) => {
-      // setItemSelected(listItem.filter( item => item.id === id)[0] );    
-      // setEditar(true);
-      
-      navigation.navigate('Editar', { id: item.id, value: item.value } );
+    const onHandlerEditar = ( item ) => {      
 
-      console.log(item);
+      dispatch(seleccionarPersona(item.id));
+      navigation.navigate('Editar', { id: item.id, value: item.value } );
 
     }
 
@@ -70,7 +73,7 @@ const Index = ({ navigation }) => {
           <AddItem textItem={textItem} onHandlerChangueItem={onHandlerChangueItem} addItems={addItems} />  
           <View style={styles.listItems}> 
             <FlatList 
-            data={ listItem } 
+            data={ personas } 
             renderItem={ renderItem } 
             keyExtractor={ item => item.id }  
             />            

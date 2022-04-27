@@ -1,13 +1,18 @@
 import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Colores from '../constants/colores';
 import React from 'react'
 
 const EditarItemTemporal = ({navigation, route}) => {
-  let itemSelected = route.params;
+  // let itemSelected = route.params;
+
+  const itemSelected = useSelector(state => state.personas.seleccionada);
+
+
   return (   
     <View style={styles.container}>
-            <Text style={ styles.titulo }>Editar Item</Text>
+            <Text style={ styles.titulo }>Editar Personas</Text>
             <View style={styles.addItemContainer}>          
                 <TextInput placeholder="Ingrese un item a Editar" style={styles.textInput} value={ itemSelected.value } ></TextInput>
                 <View style={ styles.containerBotones }>

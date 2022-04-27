@@ -4,6 +4,8 @@ import React from 'react'
 
 const ListaItem = (props) => {
     const { onHandlerModal, data, onHandlerEditar } = props;
+
+
   return (
     <View style={styles.containerItem}>
         <Text style={{...styles.textItem, flex:1} }>{data.item.id}</Text>
