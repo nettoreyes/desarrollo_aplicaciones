@@ -1,6 +1,7 @@
 import Colores from '../constants/colores';
 import EditarItemTemporal from '../components/EditarItemTemporal';
 import Index from '../components/List/Index';
+import { Platform } from 'react-native';
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 

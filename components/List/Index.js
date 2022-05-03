@@ -37,8 +37,7 @@ const Index = ({ navigation }) => {
       setModalVisible(!modalVisible);
     }  
 
-    const onHandlerEditar = ( item ) => {      
-
+    const onHandlerEditar = ( item ) => {    
       dispatch(seleccionarPersona(item.id));
       navigation.navigate('Editar', { id: item.id, value: item.value } );
 

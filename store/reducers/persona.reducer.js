@@ -8,11 +8,9 @@ const initialState = {
 
 const PersonaReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SELECCIONAR_PERSONA:
-            
+        case SELECCIONAR_PERSONA:            
             const indicePersona = state.personas.findIndex(persona => persona.id === action.personaID);
             if(indicePersona === -1) return state;
-
             return {
                 ...state, seleccionada: state.personas[indicePersona]
             };
