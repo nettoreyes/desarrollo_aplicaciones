@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, Image, StyleSheet, Text, View } from 'react-native';
 
 import React from 'react'
 
@@ -8,8 +8,9 @@ const ListaItem = (props) => {
 
   return (
     <View style={styles.containerItem}>
-        <Text style={{...styles.textItem, flex:1} }>{data.item.id}</Text>
-        <Text style={{...styles.textItem, flex:5}}>{data.item.value}</Text>
+        {/* <Text style={{...styles.textItem, flex:1} }>{data.item.id}</Text> */}
+        {!data.item.imagen ? ( <Text style={styles.image}>Img</Text> ) :  (<Image style={styles.image} source={{ uri: data.item.imagen }} />)}
+        <Text style={{...styles.textItem, flex:4}}>{data.item.value}</Text>
         <View style={{flex:1, paddingEnd: 2 }}>
             <Button title='_/' onPress={() => onHandlerEditar(data.item) } />            
         </View>
@@ -34,6 +35,15 @@ const styles = StyleSheet.create({
     },
     textItem: {
         color: 'black',
+        marginStart: 5,
+    },
+    image: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        backgroundColor: 'blue', 
+        flex: 1,
+        padding: 2
     }
   });
   

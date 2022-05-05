@@ -24,7 +24,7 @@ const ItemNavigation = () => {
             initialRouteName="Home"
             >
                 <BottomTabs.Screen 
-                    name="Home" 
+                    name="Homes" 
                     component={ ItemStackNavigation }  
                     options={{
                         tabBarIcon: ({ focused }) => (

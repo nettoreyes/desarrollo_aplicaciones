@@ -1,16 +1,18 @@
-import {Button, Keyboard, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Alert, Button, Keyboard, StyleSheet, Text, TextInput, View} from 'react-native';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 import Colores from '../constants/colores';
+import ImageSelector from './ImageSelector';
 import { modificaPersona } from '../store/actions/persona.action';
 
-const EditarItemTemporal = ({navigation, route}) => {
-  // let itemSelected = route.params;
+const EditarItemTemporal = ({navigation, route}) => { 
 
   const itemSelected = useSelector(state => state.personas.seleccionada);
   const dispatch = useDispatch();
-  const [textItem, setTextItem] = useState(itemSelected.value);
+  const [textItem, setTextItem] = useState(itemSelected.value);  
+  const [image, setImage] = useState(itemSelected.imagen);
+
 
   const onHandlerChangueItem = ( texto ) => {
     setTextItem(texto);    
@@ -19,7 +21,8 @@ const EditarItemTemporal = ({navigation, route}) => {
   const modificaItems = () => {  
     const personaEditada = {
       id: itemSelected.id,
-      value: textItem
+      value: textItem,
+      imagen: image
     }
     dispatch(modificaPersona( personaEditada ));
     setTextItem('');      
@@ -31,12 +34,13 @@ const EditarItemTemporal = ({navigation, route}) => {
   return (   
     <View style={styles.container}>
             <Text style={ styles.titulo }>Editar Personas</Text>
-            <View style={styles.addItemContainer}>          
-                <TextInput placeholder="Ingrese un item a Editar" style={styles.textInput} value={ textItem } onChangeText={ onHandlerChangueItem } ></TextInput>
-                <View style={ styles.containerBotones }>
-                    <Button title="Modificar "  onPress={ modificaItems }  />
-                    <Button title="Cancelar" color={'red'} onPress={() => navigation.navigate('Home')}  />
-                </View>
+            <View style={styles.addItemContainer}>       
+              <ImageSelector setImage={setImage} imagenPersona={image} />
+              <TextInput placeholder="Ingrese un item a Editar" style={styles.textInput} value={ textItem } onChangeText={ onHandlerChangueItem } ></TextInput>              
+              <View style={ styles.containerBotones }>
+                  <Button title="Modificar "  onPress={ modificaItems }  />
+                  <Button title="Cancelar" color={'red'} onPress={() => navigation.navigate('Home')}  />
+              </View>
             </View>
             
       </View>
