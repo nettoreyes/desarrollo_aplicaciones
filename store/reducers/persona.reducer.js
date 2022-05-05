@@ -1,5 +1,6 @@
+import { ELIMINA_PERSONA, GUARDA_PERSONA, MODIFICA_PERSONA, SELECCIONAR_PERSONA } from '../actions/persona.action';
+
 import { PERSONAS } from '../../data/personas';
-import { SELECCIONAR_PERSONA } from '../actions/persona.action';
 
 const initialState = {
     personas: PERSONAS,
@@ -14,6 +15,22 @@ const PersonaReducer = (state = initialState, action) => {
             return {
                 ...state, seleccionada: state.personas[indicePersona]
             };
+        case GUARDA_PERSONA:                       
+            return {
+                ...state, personas: [...state.personas, action.persona]
+            };        
+        case MODIFICA_PERSONA:              
+            const personasEditado = state.personas.map(persona => persona.id === action.persona.id ?  action.persona : persona);          
+            return {
+                ...state, personas: personasEditado
+            };
+
+        case ELIMINA_PERSONA:              
+            const personasElimina = state.personas.filter(persona => persona.id !== action.personaID);          
+            return {
+                ...state, personas: personasElimina
+            };
+
         default:
             return state;
     }

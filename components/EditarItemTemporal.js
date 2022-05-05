@@ -1,22 +1,40 @@
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Button, Keyboard, StyleSheet, Text, TextInput, View} from 'react-native';
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 import Colores from '../constants/colores';
-import React from 'react'
+import { modificaPersona } from '../store/actions/persona.action';
 
 const EditarItemTemporal = ({navigation, route}) => {
   // let itemSelected = route.params;
 
   const itemSelected = useSelector(state => state.personas.seleccionada);
+  const dispatch = useDispatch();
+  const [textItem, setTextItem] = useState(itemSelected.value);
+
+  const onHandlerChangueItem = ( texto ) => {
+    setTextItem(texto);    
+  }
+
+  const modificaItems = () => {  
+    const personaEditada = {
+      id: itemSelected.id,
+      value: textItem
+    }
+    dispatch(modificaPersona( personaEditada ));
+    setTextItem('');      
+    Keyboard.dismiss();
+    navigation.navigate('Home')
+  }
 
 
   return (   
     <View style={styles.container}>
             <Text style={ styles.titulo }>Editar Personas</Text>
             <View style={styles.addItemContainer}>          
-                <TextInput placeholder="Ingrese un item a Editar" style={styles.textInput} value={ itemSelected.value } ></TextInput>
+                <TextInput placeholder="Ingrese un item a Editar" style={styles.textInput} value={ textItem } onChangeText={ onHandlerChangueItem } ></TextInput>
                 <View style={ styles.containerBotones }>
-                    <Button title="Modificar (pendiente)"   />
+                    <Button title="Modificar "  onPress={ modificaItems }  />
                     <Button title="Cancelar" color={'red'} onPress={() => navigation.navigate('Home')}  />
                 </View>
             </View>

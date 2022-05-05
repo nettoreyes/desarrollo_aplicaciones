@@ -1,54 +1,53 @@
-import { Button, FlatList, Keyboard, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Keyboard, StyleSheet, Text, View } from 'react-native';
 import React, { useState } from 'react';
+import { eliminaPersona, guardarPersona, seleccionarPersona } from '../../store/actions/persona.action';
 import { useDispatch, useSelector } from 'react-redux';
 
 import AddItem from '../AddItem';
 import Colores from '../../constants/colores';
 import ListaItem from './ListaItem';
 import ModalItem from '../Modal';
-import { PERSONAS } from '../../data/personas';
-import { seleccionarPersona } from '../../store/actions/persona.action';
 
 const Index = ({ navigation }) => {    
 
     const personas = useSelector(state => state.personas.personas);
     const dispatch = useDispatch();
     
-    const [listItem, setListItem] = useState(PERSONAS);
+    
     const [itemSelected, setItemSelected] = useState({});
-    const [modalVisible, setModalVisible] = useState(false);
-    const [editar, setEditar] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);    
     const [textItem, setTextItem] = useState();
-    const [counter, setCounter] = useState(4);
+    const [counter, setCounter] = useState(5);
 
 
-    const addItems = () => {
-      setListItem(currentItems => [
-        ...currentItems,
-        {id:counter, value: textItem }
-      ]);
+    const addItems = () => {  
+      const nuevaPersona = {
+        id: counter,
+        value: textItem
+      }
+      dispatch(guardarPersona( nuevaPersona ));
       setTextItem('');
       setCounter(counter + 1);    
       Keyboard.dismiss();
     }
 
     const onHandlerModal = ( id ) => {
-      setItemSelected(listItem.filter( item => item.id === id)[0] );
+      setItemSelected(personas.filter( item => item.id === id)[0] );
       setModalVisible(!modalVisible);
     }  
 
     const onHandlerEditar = ( item ) => {    
       dispatch(seleccionarPersona(item.id));
       navigation.navigate('Editar', { id: item.id, value: item.value } );
-
     }
 
     const onHandlerChangueItem = ( texto ) => {
       setTextItem(texto);
     }
 
-    const onHandlerDelete = ( id ) => {
-      setListItem( currentItems => currentItems.filter( item => item.id !== id));
+    const onHandlerDelete = ( id ) => {      
+
+      dispatch(eliminaPersona(id));
       setItemSelected({});
       setModalVisible(!modalVisible);
     }
@@ -57,14 +56,9 @@ const Index = ({ navigation }) => {
       setModalVisible(!modalVisible); 
       setItemSelected({});
     } 
-
     
-
-
     const renderItem = data =>( <ListaItem data={ data } onHandlerModal={onHandlerModal} onHandlerEditar={onHandlerEditar} navigation={navigation}  /> );
 
-
-    
 
     return (
         <View style={styles.container}>
