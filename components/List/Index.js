@@ -1,6 +1,6 @@
 import { FlatList, Keyboard, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
-import { eliminaPersona, guardarPersona, seleccionarPersona } from '../../store/actions/persona.action';
+import React, { useEffect, useState } from 'react';
+import {cargaPersonas, eliminaPersona, guardarPersona, seleccionarPersona} from '../../store/actions/persona.action';
 import { useDispatch, useSelector } from 'react-redux';
 
 import AddItem from '../AddItem';
@@ -10,14 +10,19 @@ import ModalItem from '../Modal';
 
 const Index = ({ navigation }) => {    
 
+    const dispatch = useDispatch();  
     const personas = useSelector(state => state.personas.personas);
-    const dispatch = useDispatch();
-    
     
     const [itemSelected, setItemSelected] = useState({});
     const [modalVisible, setModalVisible] = useState(false);    
     const [textItem, setTextItem] = useState();
     const [counter, setCounter] = useState(5);
+
+
+    useEffect(() => {
+      dispatch(cargaPersonas());      
+    }, [])
+    
 
 
     const addItems = () => {  
@@ -59,7 +64,7 @@ const Index = ({ navigation }) => {
     
     const renderItem = data =>( <ListaItem data={ data } onHandlerModal={onHandlerModal} onHandlerEditar={onHandlerEditar} navigation={navigation}  /> );
 
-
+    
     return (
         <View style={styles.container}>
           <Text style={ styles.titulo }>Listado de Item</Text>

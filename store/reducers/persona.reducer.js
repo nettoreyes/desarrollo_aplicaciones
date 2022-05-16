@@ -1,14 +1,18 @@
-import { ELIMINA_PERSONA, GUARDA_PERSONA, MODIFICA_PERSONA, SELECCIONAR_PERSONA } from '../actions/persona.action';
+import { CARGA_PERSONAS, ELIMINA_PERSONA, GUARDA_PERSONA, MODIFICA_PERSONA, SELECCIONAR_PERSONA } from '../actions/persona.action';
 
-import { PERSONAS } from '../../data/personas';
+// import { PERSONAS } from '../../data/personas';
 
 const initialState = {
-    personas: PERSONAS,
+    personas: [],
     seleccionada: null,
 }
 
 const PersonaReducer = (state = initialState, action) => {
     switch (action.type) {
+        case CARGA_PERSONAS:
+            return {
+                ...state, personas: action.payload 
+            };
         case SELECCIONAR_PERSONA:            
             const indicePersona = state.personas.findIndex(persona => persona.id === action.personaID);
             if(indicePersona === -1) return state;
@@ -17,7 +21,7 @@ const PersonaReducer = (state = initialState, action) => {
             };
         case GUARDA_PERSONA:                       
             return {
-                ...state, personas: [...state.personas, action.persona]
+                ...state, personas: [...state.personas, action.payload]
             };        
         case MODIFICA_PERSONA:              
             const personasEditado = state.personas.map(persona => persona.id === action.persona.id ?  action.persona : persona);          

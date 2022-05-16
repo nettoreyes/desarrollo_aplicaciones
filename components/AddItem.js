@@ -8,7 +8,7 @@ const AddItem = (props) => {
 
     return (
         <View style={styles.addItemContainer}>          
-          <TextInput placeholder="Ingrese un item" style={styles.textInput} value={ textItem } onChangeText={ onHandlerChangueItem }></TextInput>
+          <TextInput placeholder="Ingrese un itemss" style={styles.textInput} value={ textItem } onChangeText={ onHandlerChangueItem }></TextInput>
           <Button title="+ Agregar" onPress={ addItems }  />
         </View>
     );
